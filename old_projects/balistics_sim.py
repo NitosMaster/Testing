@@ -1,4 +1,4 @@
-mport pygame
+import pygame
 import math
 import sys
 
@@ -51,54 +51,54 @@ prev_angle = 0.0
 
 running = True
 while running:
-        for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                                    running = False
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-                                        WINDOW.fill(BLACK)
+    WINDOW.fill(BLACK)
 
-                                            speed = math.hypot(vel_x, vel_y)
-                                                if speed != 0:
-                                                            drag_mag = 0.5 * drag_coefficient * air_density * cross_sectional * speed**2
-                                                                    drag_x = -drag_mag * (vel_x / speed)
-                                                                            drag_y = -drag_mag * (vel_y / speed)
-                                                                                else:
-                                                                                            drag_x = drag_y = 0
+    speed = math.hypot(vel_x, vel_y)
+    if speed != 0:
+        drag_mag = 0.5 * drag_coefficient * air_density * cross_sectional * speed**2
+        drag_x = -drag_mag * (vel_x / speed)
+        drag_y = -drag_mag * (vel_y / speed)
+    else:
+        drag_x = drag_y = 0
 
-                                                                                                acc_x = drag_x / mass
-                                                                                                    acc_y = gravity + drag_y / mass
+    acc_x = drag_x / mass
+    acc_y = gravity + drag_y / mass
 
-                                                                                                        vel_x += acc_x / FPS
-                                                                                                            vel_y += acc_y / FPS
+    vel_x += acc_x / FPS
+    vel_y += acc_y / FPS
 
-                                                                                                                if vel_y > 0:
-                                                                                                                            vel_y = 0
+    if vel_y > 0:
+        vel_y = 0
 
-                                                                                                                                bullet_x += vel_x * 20 / FPS
-                                                                                                                                    bullet_y += vel_y * 20 / FPS
+    bullet_x += vel_x * 20 / FPS
+    bullet_y += vel_y * 20 / FPS
 
-                                                                                                                                        current_angle = -math.degrees(math.atan2(vel_y, vel_x))
-                                                                                                                                            if current_angle > 160:
-                                                                                                                                                        current_angle = 160
-                                                                                                                                                            elif current_angle < 0:
-                                                                                                                                                                        current_angle = 0
+    current_angle = -math.degrees(math.atan2(vel_y, vel_x))
+    if current_angle > 160:
+        current_angle = 160
+    elif current_angle < 0:
+        current_angle = 0
 
-                                                                                                                                                                            prev_angle = current_angle
+    prev_angle = current_angle
 
-                                                                                                                                                                                rotated_bullet = pygame.transform.rotate(bullet_surf, current_angle)
-                                                                                                                                                                                    rect = rotated_bullet.get_rect(center=(bullet_x, bullet_y))
-                                                                                                                                                                                        WINDOW.blit(rotated_bullet, rect)
+    rotated_bullet = pygame.transform.rotate(bullet_surf, current_angle)
+    rect = rotated_bullet.get_rect(center=(bullet_x, bullet_y))
+    WINDOW.blit(rotated_bullet, rect)
 
-                                                                                                                                                                                            if bullet_y > HEIGHT:
-                                                                                                                                                                                                        bullet_x = WIDTH // 2
-                                                                                                                                                                                                                bullet_y = HEIGHT - (casing_height + tip_radius)
-                                                                                                                                                                                                                        angle = math.radians(85)
-                                                                                                                                                                                                                                vel_x = velocity * math.cos(angle)
-                                                                                                                                                                                                                                        vel_y = -velocity * math.sin(angle)
-                                                                                                                                                                                                                                                prev_angle = -math.degrees(math.atan2(vel_y, vel_x))
+    if bullet_y > HEIGHT:
+        bullet_x = WIDTH // 2
+        bullet_y = HEIGHT - (casing_height + tip_radius)
+        angle = math.radians(85)
+        vel_x = velocity * math.cos(angle)
+        vel_y = -velocity * math.sin(angle)
+        prev_angle = -math.degrees(math.atan2(vel_y, vel_x))
 
-                                                                                                                                                                                                                                                    pygame.display.flip()
-                                                                                                                                                                                                                                                        clock.tick(FPS)
+    pygame.display.flip()
+    clock.tick(FPS)
 
-                                                                                                                                                                                                                                                        pygame.quit()
-                                                                                                                                                                                                                                                        sys.exit()
+pygame.quit()
+sys.exit()
